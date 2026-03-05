@@ -1,7 +1,7 @@
 # mujoco教程
 MJCF为建模部分
 CPP和python均为开发接口
-extend为拓展和进阶
+extend为拓展和进阶 -- 后面会持续更新
 ## 教程目录
 🚀[教程目录（更新中）](directory.md)
 ## 视频教程
