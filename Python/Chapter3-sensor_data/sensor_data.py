@@ -33,6 +33,16 @@ scene = mujoco.MjvScene(m, maxgeom=1000)
 context = mujoco.MjrContext(m, mujoco.mjtFontScale.mjFONTSCALE_150)
 mujoco.mjr_setBuffer(mujoco.mjtFramebuffer.mjFB_OFFSCREEN, context)
 
+def get_sensor_data2(sensor_name):
+    sensor_id = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_SENSOR, sensor_name)
+    if sensor_id == -1:
+        raise ValueError(f"Sensor '{sensor_name}' not found in model!")
+    start_idx = m.sensor2_adr[sensor_id]
+    dim = m.sensor_dim[sensor_id]
+    sensor_values = d.2sensordata[start_idx : start_idx + dim]
+    return sensor_values
+
+
 def get_image(w,h):
     # 定义视口大小
     viewport = mujoco.MjrRect(0, 0, w, h)
@@ -89,6 +99,11 @@ with mujoco.viewer.launch_passive(m, d) as viewer:
     cv2.imshow("depth_img",depth_img)
     cv2.waitKey(1)
 
+
+    img,depth_img = get_image(640,480)
+    cv2.imshow("img",img)
+    cv2.imshow("depth_img",depth_img)
+    cv2.waitKey(1)
 
     # Example modification of a viewer option: toggle contact points every two seconds.
     with viewer.lock():
