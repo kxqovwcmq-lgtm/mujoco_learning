@@ -33,6 +33,11 @@ scene = mujoco.MjvScene(m, maxgeom=1000)
 context = mujoco.MjrContext(m, mujoco.mjtFontScale.mjFONTSCALE_150)
 mujoco.mjr_setBuffer(mujoco.mjtFramebuffer.mjFB_OFFSCREEN, context)
 
+glfw.init()
+glfw.window_hint(glfw.VISIBLE,glfw.FALSE)
+window = glfw.create_window(1200,900,"mujoco",None,None)
+glfw.make_context_current(window)
+
 def get_sensor_data2(sensor_name):
     sensor_id = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_SENSOR, sensor_name)
     if sensor_id == -1:
